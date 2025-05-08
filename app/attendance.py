@@ -4,6 +4,7 @@ import pickle
 
 from firebase_admin import db
 import cv2
+from flask import current_app
 import numpy as np
 import face_recognition
 import cvzone
@@ -19,7 +20,18 @@ from . import config
 
 def generate_frame(selected_subject):
     # Inisialisasi Kamera Menggunakan OpenCV
-    capture = cv2.VideoCapture(0)
+    # Cek environment
+    if os.environ.get('IS_PRODUCTION'):
+        # Mode production - gunakan video dummy
+        dummy_video_path = os.path.join(
+            os.path.dirname(current_app.root_path),
+            'static/Files/Resources/test_video.mp4'
+        )
+        capture = cv2.VideoCapture(dummy_video_path)
+    else:
+        # Mode development - gunakan kamera fisik
+        capture = cv2.VideoCapture(0)
+    
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
     # Membaca Background image menggunakan OpenCV
