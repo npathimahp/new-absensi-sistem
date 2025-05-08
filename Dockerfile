@@ -17,5 +17,8 @@ RUN apt-get update && apt-get install -y libglib2.0-0 libgl1
 # Menyalin aplikasi ke dalam container
 COPY . /app
 
+devices:
+  - "/dev/video0:/dev/video0"
+
 # Jalankan aplikasi
 CMD ["python", "run.py"]
