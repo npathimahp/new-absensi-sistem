@@ -1,0 +1,13 @@
+import os
+import json
+
+# Cache for encoded faces
+ENCODE_FILE = "EncodeFile.p"  # Path to the encoded faces file
+
+# Secret key for Flask session
+SECRET_KEY = os.environ.get("SECRET_KEY", "default-key")  # Change this to a random string
+
+# Firebase configuration details
+FIREBASE_CREDENTIALS = json.loads(os.environ.get("GOOGLE_SERVICE_KEY"))
+DATABASE_URL = os.environ.get("DATABASE_URL")
+STORAGE_BUCKET = os.environ.get("STORAGE_BUCKET")

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daftar Kehadiran</title>
+  <link href="{{ url_for('static', filename='styles/admin.css') }}" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <nav>
+      <ul>
+        <li>
+          <a href="/lecturer" class="logo">
+            <img src="{{ url_for('static', filename='Files/Resources/admin_icon.jpg') }}" />
+            <span class="nav-item">Dosen</span>
+          </a>
+        </li>
+        <li>
+          <a href="/lecturer">
+            <i class="fas fa-book-reader"></i>
+            <span class="nav-item">Daftar Mata Kuliah</span>
+          </a>
+        </li>
+        <li>
+          <a href="/lecturer/choose_subject">
+            <i class="fas fa-book"></i>
+            <span class="nav-item">Lakukan Absen</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:location.reload();">
+            <i class="fas fa-chart-bar"></i>
+            <span class="nav-item">Daftar Kehadiran</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('routes.logout') }}" class="logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="nav-item">Log out</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <section class="main attendance">
+      <div class="attendance-list">
+        <h1>Daftar Kehadiran Hari Ini</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nama</th>
+              <th>Mata Kuliah</th>
+              <th>Pertemuan</th>
+              <th>Waktu Kehadiran</th>
+            </tr>
+          </thead>
+          {% if data|length == 0 %}
+          <tbody>
+            <tr>
+              <td colspan="5" style="text-align: center;">Tidak ada data</td>
+            </tr>
+          </tbody>
+          {% endif %}
+          {% for student in data %}
+          <tbody>
+            <tr>
+              <td>{{ student.info.id }}</td>
+              <td>{{ student.info.name }}</td>
+              <td>{{ student.subject}}</td>
+              <td>{{ student.info.total_attendance }}</td>
+              <td>{{ student.info.last_attendance_time|format_datetime }}</td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </section>
+    <form method="POST" action="{{ url_for('routes.lecturer_attendance_list') }}">
+      <button type="submit" class="button_admin" name="button_lecturer" value="VALUE2">
+        Hapus Daftar Kehadiran
+      </button>
+    </form>
+  </div>
+</body>
+
+</html>

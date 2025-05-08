@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tambah Dosen</title>
+    <link href="{{ url_for('static', filename='styles/admin.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link href="{{ url_for('static', filename='styles/add_user.css') }}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li>
+                    <a href="/lecturer" class="logo">
+                        <img src="{{ url_for('static', filename='Files/Resources/admin_icon.jpg') }}" />
+                        <span class="nav-item">Admin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin">
+                        <i class="fas fa-user-graduate"></i>
+                        <span class="nav-item">Daftar Mahasiswa</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/add_student">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="nav-item">Tambah Mahasiswa</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/lecturer_data">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span class="nav-item">Daftar Dosen</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:location.reload();">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="nav-item">Tambah Dosen</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/subject_data">
+                        <i class="fas fa-book"></i>
+                        <span class="nav-item">Daftar Mata Kuliah</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/add_subject">
+                        <i class="fas fa-book-medical"></i>
+                        <span class="nav-item">Tambah Mata Kuliah</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('routes.logout') }}" class="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="nav-item">Log out</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <section class="main">
+            <section class="container1">
+                <header>Tambah Dosen</header>
+                <form action="/admin/add_lecturer" method="post" class="form">
+                    <div class="input-box">
+                        <label>ID</label>
+                        <input type="text" placeholder="Masukkan NIP" name="id" required />
+                    </div>
+                    <div class="input-box">
+                        <label>Nama Lengkap</label>
+                        <input type="text" placeholder="Masukkan Nama Lengkap" name="name" required />
+                    </div>
+                    <div class="input-box">
+                        <label>Password</label>
+                        <input type="password" placeholder="Masukkan Password" name="password" required />
+                    </div>
+                    <div class="input-box">
+                        <label>Email</label>
+                        <input type="email" placeholder="Masukkan Email" name="email" required />
+                    </div>
+                    <div class="input-box address">
+                        <label>Alamat</label>
+                        <div class="column">
+                            <input type="text" placeholder="Masukkan Kota" name="city" required />
+                            <div class="select-box">
+                                <select name="province">
+                                    <option hidden>Provinsi</option>
+                                    <option>Aceh</option>
+                                    <option>Sumatera Utara</option>
+                                    <option>Sumatera Barat</option>
+                                    <option>Riau</option>
+                                    <option>Kepulauan Riau</option>
+                                    <option>Jambi</option>
+                                    <option>Sumatera Selatan</option>
+                                    <option>Bangka Belitung</option>
+                                    <option>Bengkulu</option>
+                                    <option>Lampung</option>
+                                    <option>DKI Jakarta</option>
+                                    <option>Jawa Barat</option>
+                                    <option>Jawa Tengah</option>
+                                    <option>DI Yogyakarta</option>
+                                    <option>Jawa Timur</option>
+                                    <option>Banten</option>
+                                    <option>Bali</option>
+                                    <option>Nusa Tenggara Barat</option>
+                                    <option>Nusa Tenggara Timur</option>
+                                    <option>Kalimantan Barat</option>
+                                    <option>Kalimantan Tengah</option>
+                                    <option>Kalimantan Selatan</option>
+                                    <option>Kalimantan Timur</option>
+                                    <option>Kalimantan Utara</option>
+                                    <option>Sulawesi Utara</option>
+                                    <option>Sulawesi Tengah</option>
+                                    <option>Sulawesi Selatan</option>
+                                    <option>Sulawesi Tenggara</option>
+                                    <option>Gorontalo</option>
+                                    <option>Sulawesi Barat</option>
+                                    <option>Maluku</option>
+                                    <option>Maluku Utara</option>
+                                    <option>Papua</option>
+                                    <option>Papua Barat</option>
+                                    <option>Papua Barat Daya</option>
+                                    <option>Papua Tengah</option>
+                                    <option>Papua Pegunungan</option>
+                                    <option>Papua Selatan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-box">
+                        <label>Prodi</label>
+                        <input type="text" placeholder="Masukkan Jurusan" name="major" required />
+                    </div>
+                    <button>Submit</button>
+                </form>
+            </section>
+        </section>
+    </div>
+</body>
+
+</html>

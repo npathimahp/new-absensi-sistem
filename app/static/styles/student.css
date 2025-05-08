@@ -1,0 +1,158 @@
+* {
+  margin: 5px 5px;
+  padding: 0px 5px;
+}
+
+body {
+  background-image: url("Web Background.jpg");
+  background-position: center;
+  background-repeat: repeat;
+  margin: 0px auto;
+}
+
+h1 {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  background-color: #d0d0d0;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-lg-4 {
+  margin: 1% 1%;
+  width: 80%;
+  white-space: nowrap;
+}
+
+.col-lg-8 {
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+}
+
+.student-profile .card {
+  border-radius: 10px;
+}
+
+.student-profile .card .card-header .profile_img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin: 10px auto;
+  border: 10px solid #ccc;
+  border-radius: 50%;
+}
+
+.student-profile .card h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.student-profile .card p {
+  font-size: 16px;
+  color: #000;
+}
+
+.student-profile .table th,
+.student-profile .table td {
+  font-size: 14px;
+  padding: 5px 10px;
+  color: #000;
+}
+
+button {
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: white;
+  color: black;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border: 1px solid #4ad489;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+button:hover {
+  background: #4ad489;
+  color: #fff;
+  transition: 0.5s;
+}
+
+.back {
+  margin-right: 10px;
+}
+
+.button-link {
+  display: inline-block;
+  /* Make the link behave like a button */
+  background-color: rgb(28, 180, 87);
+  /* Button background color */
+  color: #ffffff;
+  /* Text color */
+  text-decoration: none;
+  /* Remove underline */
+  padding: 10px 15px;
+  /* Button padding */
+  border-radius: 5px;
+  /* Rounded corners */
+  font-size: 16px;
+  /* Font size */
+  text-align: center;
+  /* Center the text */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  border: none;
+  /* Remove border */
+}
+
+.button-link:hover {
+  background-color: hsl(110, 91%, 41%);
+  /* Darker green on hover */
+  color: #fff;
+  /* Ensure text remains white */
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  border-top: none;
+  border-bottom: 2px solid #dee2e6;
+  background-color: #f8f9fa;
+  color: #495057;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.form-control {
+  border: 2px solid #dee2e6;
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+.card-header {
+  background: linear-gradient(to right, #f8f9fa, #ffffff);
+}

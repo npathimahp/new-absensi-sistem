@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="in">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Profile Dosen</title>
+
+  <link href="{{ url_for('static', filename='styles/student.css') }}" rel="stylesheet" type="text/css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    function saveEdits() {
+      var editElem = {
+        name: document.getElementById("name").innerText,
+        id: document.getElementById("id").innerText,
+        address: document.getElementById("address").innerText,
+        email: document.getElementById("email").innerText,
+        major: document.getElementById("major").innerText,
+      };
+
+      $.ajax({
+        url: "/save_changes_lecturer",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(editElem),
+        success: function (response) {
+          alert("Data berhasil disimpan!");
+        },
+        error: function (error) {
+          console.error(error);
+          alert("Terjadi kesalahan saat menyimpan data.");
+        },
+      });
+    }
+
+    function delete_user() {
+      var id = document.getElementById("id").innerText;
+
+      if (!id) {
+        alert("ID dosen tidak ditemukan!");
+        return;
+      }
+      //konfirmasi sebelum menghapus
+      if (!confirm("Apakah Anda yakin ingin menghapus dosen ini?")) {
+        return;
+      }
+      // Pastikan ID yang dikirim dalam JSON benar
+      var dataToSend = {
+        lecture_id: id,  // Menggunakan lecture_id agar konsisten dengan server
+      };
+
+      $.ajax({
+        url: "/delete_lecturer",  // Pastikan rute ini benar di server
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(dataToSend),  // Mengirim data ID dalam format JSON
+        success: function (response) {
+          alert("Data berhasil dihapus!");
+          window.location.href = "/admin/lecturer_data";  // Redirect ke halaman data dosen setelah penghapusan
+        },
+        error: function (xhr, status, error) {
+          console.error("Status:", status);
+          console.error("Error:", error);
+          console.error("Response:", xhr.responseText);
+          alert("Terjadi kesalahan saat menghapus data. Error: " + error);
+        },
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Edit Profile Dosen</h1>
+  <div class="student-profile py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent text-center">
+              <img class="profile_img" src="{{ url_for('static', filename='Files/Resources/admin_icon.jpg') }}"
+                alt="student" />
+              <h3 contenteditable id="name">{{ data.name }}</h3>
+            </div>
+            <div class="card d-flex align-items-center justify-content-center" style="height: 100%;">
+              <div class="card-body text-center">
+                <p class="mb-2"><strong>ID Dosen :</strong><span contenteditable id="id">{{
+                    data.id }}</span></p>
+                <p class="mb-2"><strong>Prodi :</strong><span contenteditable id="major">{{
+                    data.major }}</span></p>
+                <p class="mb-2"><strong>Alamat :</strong><span contenteditable id="address">{{
+                    data.address }}</span></p>
+                <p class="mb-2"><strong>Email :</strong><span contenteditable id="email">{{
+                    data.email }}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card shadow-lg rounded-lg border-0 mb-4">
+            <div class="card-header bg-white border-0 py-3">
+              <h3 class="mb-0">
+                <i class="far fa-clone pr-2"></i>Mata Kuliah Yang Diampu
+              </h3>
+            </div>
+            <div class="card-body pt-0">
+              <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead class="thead-light">
+                    <tr>
+                      <th class="font-weight-bold">Kode Mata Kuliah</th>
+                      <th class="font-weight-bold">Nama Mata Kuliah</th>
+                      <th class="font-weight-bold">Kelas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if data.subjects %}
+                    {% for subject_code, subject in data.subjects.items() %}
+                    <tr>
+                      <td class="align-middle">{{ subject.code }}</td>
+                      <td class="align-middle">{{ subject.name }}</td>
+                      <td class="align-middle">{{ subject.kelas }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                      <td colspan="4" class="text-center text-muted py-4">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Dosen belum mengampu mata kuliah apapun, silakan tambahkan mata kuliah yang diampu pada <a
+                          href="/admin/add_subject">halaman Tambah Mata Kuliah</a>
+                      </td>
+                    </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Notes</h3>
+            </div>
+            <div class="card-body pt-0">
+              <p>
+                Jika ingin menambah mata kuliah yang diampu, silakan tambahkan mata kuliah tersebut pada <a
+                  href="/admin/add_subject">halaman Tambah Mata Kuliah</a> dan jangan lupa untuk menghapus mata kuliah
+                yang tidak diampu pada <a href="/admin/subject_data">halaman Daftar Mata Kuliah</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <button onclick="saveEdits()">Simpan</button>
+        <button class="delete" onclick="delete_user()">Hapus</button>
+        <button class="back" onclick="window.location.href='/admin/lecturer_data'">Kembali</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

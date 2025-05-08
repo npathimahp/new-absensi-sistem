@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Absensi Wajah</title>
+    <link href="{{ url_for('static', filename='styles/index.css') }}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Selamat Datang di Sistem Absensi</h1>
+        <div class="main-content">
+            <div class="login-section">
+                <h3 class="blinking-text">Silakan Login Untuk Memulai :</h3>
+                <div class="login-selection">
+                    <a href="admin_login">
+                        <button type="button" class="mybutton">Login Admin</button>
+                    </a>
+                    <a href="student_login">
+                        <button type="button" class="mybutton">Login Mahasiswa</button>
+                    </a>
+                    <a href="lecturer_login">
+                        <button type="button" class="mybutton">Login Dosen</button>
+                    </a>
+                </div>
+                <a href="student_attendance_list">
+                    <button type="button" class="mybutton3">Daftar Kehadiran</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

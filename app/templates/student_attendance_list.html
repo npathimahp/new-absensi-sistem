@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daftar Kehadiran</title>
+  <link href="{{ url_for('static', filename='styles/admin.css') }}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="container">
+    <section class="attendance">
+      <div class="attendance-list">
+        <button class="home_button" onclick="window.location.href='/'">
+          Home
+        </button>
+        <h1>Daftar Kehadiran Hari Ini</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>ID</th>
+              <th>Nama</th>
+              <th>Mata Kuliah</th>
+              <th>Pertemuan</th>
+              <th>Waktu Kehadiran</th>
+            </tr>
+          </thead>
+          {% if data|length == 0 %}
+          <tbody>
+            <tr>
+              <td colspan="5" style="text-align: center;">Tidak ada data</td>
+            </tr>
+          </tbody>
+          {% endif %}
+          {% for student in data %}
+          <tbody>
+            <tr>
+              <td>{{ loop.index }}</td> 
+              <td>{{ student.info.id }}</td>
+              <td>{{ student.info.name }}</td>
+              <td>{{ student.subject }}</td>
+              <td>{{ student.info.total_attendance }}</td>
+              <td>{{ student.info.last_attendance_time|format_datetime }}</td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </section>
+  </div>
+</body>
+
+</html>

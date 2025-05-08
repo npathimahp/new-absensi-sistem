@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Dosen</title>
+    <link href="{{ url_for('static', filename='styles/admin.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li>
+                    <a href="javascript:location.reload();" class="logo">
+                        <img src="{{ url_for('static', filename='Files/Resources/admin_icon.jpg') }}" />
+                        <span class="nav-item">Admin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin">
+                        <i class="fas fa-user-graduate"></i>
+                        <span class="nav-item">Daftar Mahasiswa</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/add_student">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="nav-item">Tambah Mahasiswa</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:location.reload();">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span class="nav-item">Daftar Dosen</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/add_lecturer">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="nav-item">Tambah Dosen</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/subject_data">
+                        <i class="fas fa-book"></i>
+                        <span class="nav-item">Daftar Mata Kuliah</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/add_subject">
+                        <i class="fas fa-book-medical"></i>
+                        <span class="nav-item">Tambah Mata Kuliah</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('routes.logout') }}" class="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="nav-item">Log out</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <section class="main">
+            <div class="main-top">
+                <h1>Dosen Yang Terdaftar 2025</h1>
+            </div>
+            <div class="users">
+                {% for i in range(data|length) %}
+                <div class="card">
+                    <img src="{{ url_for('static', filename='Files/Resources/admin_icon.jpg') }}" />
+                    <h4>{{ data[i]['name'] }}</h4>
+                    <p>{{ data[i]['major'] }}</p>
+                    <p>{{ data[i]['address'] }}</p>
+                    <form method="POST" action="/admin/edit_lecturer">
+                        <button class="edit_lecturer" type="submit" name="edit_lecturer"
+                            value="{{ data[i]['id'] }}">Detail Dosen</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

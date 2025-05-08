@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Mahasiswa</title>
+
+  <link href="{{ url_for('static', filename='styles/student.css') }}" rel="stylesheet" type="text/css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript">
+    function delete_subject(subject_id) {
+      if (!subject_id) {
+        alert("ID mata kuliah tidak ditemukan!");
+        return;
+      }
+      // konfirmasi sebelum menghapus
+      if (!confirm("Apakah Anda yakin ingin menghapus mata kuliah ini?")) {
+        return;
+      }
+
+      $.ajax({
+        url: "/delete_student_subject/" + subject_id,  // Menggunakan URL parameter
+        type: "POST",
+        success: function (response) {
+          alert("Data berhasil dihapus!");
+          window.location.href = "/student_dashboard";
+        },
+        error: function (xhr, status, error) {
+          console.error("Status:", status);
+          console.error("Error:", error);
+          console.error("Response:", xhr.responseText);
+          alert("Terjadi kesalahan saat menghapus data. Error: " + error);
+        },
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Profil Mahasiswa</h1>
+  <div class="student-profile py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent text-center">
+              <img class="profile_img"
+                src="{{ url_for('static', filename='Files/Images/'+ data.studentInfo.id +'.png') }}" alt="student dp" />
+              <h3>{{ data.studentInfo.name }}</h3>
+            </div>
+            <div class="card d-flex align-items-center justify-content-center" style="height: 100%;">
+              <div class="card-body text-center">
+                <p class="mb-2">
+                  <strong>ID Mahasiswa:</strong> {{ data.studentInfo.id }}
+                </p>
+                <p class="mb-2">
+                  <strong>Tanggal Lahir:</strong> {{ data.studentInfo.dob }}
+                </p>
+                <p class="mb-2">
+                  <strong>Alamat:</strong> {{ data.studentInfo.address }}
+                </p>
+                <p class="mb-2">
+                  <strong>Nomor Handphone:</strong> {{ data.studentInfo.phone }}
+                </p>
+                <p class="mb-2">
+                  <strong>Email:</strong> {{ data.studentInfo.email }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="mb-0">
+                <i class="far fa-clone pr-1"></i>Informasi Umum
+              </h3>
+            </div>
+            <div class="card-body pt-0">
+              <table class="table table-bordered">
+                <tr>
+                  <th width="30%">Angkatan</th>
+                  <td>{{ data.studentInfo.starting_year }}</td>
+                </tr>
+                <tr>
+                  <th width="30%">Semester</th>
+                  <td>{{ data.studentInfo.year }}</td>
+                </tr>
+                <tr>
+                  <th width="30%">Total Kehadiran</th>
+                  <td>{{ data.studentInfo.total_attendance }}</td>
+                </tr>
+                <tr>
+                  <th width="30%">Waktu Absensi</th>
+                  <td>{{ data.studentInfo.last_attendance_time }}</td>
+                </tr>
+                <tr>
+                  <th width="30%">Terakhir Login</th>
+                  <td>{{ data.lastLogin }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card shadow-lg rounded-lg border-0 mb-4">
+            <div class="card-header bg-white border-0 py-3">
+              <h3 class="mb-0">
+                <i class="far fa-clone pr-2"></i>Mata Kuliah Yang Diambil
+              </h3>
+            </div>
+            <div class="card-body pt-0">
+              {% if data.error %}
+              <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                <i class="fas fa-exclamation-circle mr-2"></i>{{ data.error }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endif %}
+              <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead class="thead-light">
+                    <tr>
+                      <th class="font-weight-bold">Mata Kuliah</th>
+                      <th class="font-weight-bold">Kelas</th>
+                      <th class="font-weight-bold">Dosen</th>
+                      <th class="font-weight-bold text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if data.studentInfo.subjects %}
+                    {% for subject_id, subject in data.studentInfo.subjects.items() %}
+                    <tr>
+                      <td class="align-middle">{{ subject.name }}</td>
+                      <td class="align-middle">{{ subject.kelas }}</td>
+                      <td class="align-middle">{{ subject.lecturer }}</td>
+                      <td class="text-center">
+                        <button class="btn btn-danger btn-sm delete" onclick="delete_subject('{{ subject_id }}')">
+                          <i class="fas fa-trash-alt mr-1"></i>Hapus
+                        </button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                      <td colspan="4" class="text-center text-muted py-4">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Anda belum terdaftar pada mata kuliah manapun.
+                      </td>
+                    </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+              <form action="{{ url_for('routes.student_dashboard') }}" method="POST" class="mt-4">
+                <div class="form-group">
+                  <select class="form-control form-control-lg rounded" name="subject" id="subject">
+                    <option value="0" disabled selected>Pilih Mata Kuliah</option>
+                    {% for subject in data.subjects %}
+                    <option value="{{ subject.subject_id}}">
+                      {{ subject.name }} - {{ subject.lecturer }} - Kelas {{ subject.kelas }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                  <small class="form-text text-muted ml-2 mt-2">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    Pilih mata kuliah yang ingin Anda ambil.
+                  </small>
+                </div>
+                <div class="text-right mt-3">
+                  <button type="submit" class="btn btn-primary px-4">
+                    <i class="fas fa-plus-circle mr-2"></i>Tambah Mata Kuliah
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <a href="{{ url_for('routes.logout') }}" class="button-link">Log Out</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

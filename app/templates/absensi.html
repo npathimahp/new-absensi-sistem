@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Absensi</title>
+    <link href="{{ url_for('static', filename='styles/admin.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li>
+                    <a href="/lecturer" class="logo">
+                        <img src="{{ url_for('static', filename='Files/Resources/admin_icon.jpg') }}" />
+                        <span class="nav-item">Dosen</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/lecturer">
+                        <i class="fas fa-book-reader"></i>
+                        <span class="nav-item">Daftar Mata Kuliah</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/lecturer/choose_subject">
+                        <i class="fas fa-book"></i>
+                        <span class="nav-item">Pilih Mata Kuliah</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="lecturer_attendance_list">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="nav-item">Daftar Kehadiran</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('routes.logout') }}" class="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="nav-item">Log out</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <section class="main">
+            <div class="main-top">
+                <h1>Mata Kuliah yang Dipilih: {{ subject }}</h1>
+            </div>
+            <div class="mainFrame">
+                <!-- Video Feed container (initially hidden) -->
+                <div id="videoFeedContainer"></div>
+
+                <!-- Button to toggle the video feed -->
+                <button class="absen-button" id="toggleButton" onclick="toggleImage()">Buka Kamera Absen</button>
+            </div>
+        </section>
+    </div>
+    <script>
+        function toggleImage() {
+            var container = document.getElementById("videoFeedContainer");
+            var button = document.getElementById("toggleButton");
+
+            // If the image is already there, remove it
+            if (container.querySelector('img')) {
+                container.innerHTML = ''; // Remove the <img> element
+                button.textContent = "Buka Kamera Absen"; // Change button text
+            } else {
+                // Add the <img> tag when the button is clicked
+                var img = document.createElement("img");
+                img.className = "responsive-video-frame";
+                img.src = "{{ url_for('routes.video') }}"; // Set the image source
+                img.alt = "Video Feed";
+
+                // Append the image to the container
+                container.appendChild(img);
+                button.textContent = "Tutup Kamera Absen"; // Change button text
+            }
+        }
+    </script>
+</body>
+
+</html>

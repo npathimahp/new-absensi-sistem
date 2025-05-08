@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dosen </title>
+  <link href="{{ url_for('static', filename='styles/admin.css') }}" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <nav>
+      <ul>
+        <li>
+          <a href="javascript:location.reload();" class="logo">
+            <img src="{{ url_for('static', filename='Files/Resources/admin_icon.jpg') }}" />
+            <span class="nav-item">Dosen</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:location.reload();">
+            <i class="fas fa-book-reader"></i>
+            <span class="nav-item">Daftar Mata Kuliah</span>
+          </a>
+        </li>
+        <li>
+          <a href="/lecturer/choose_subject">
+            <i class="fas fa-book"></i>
+            <span class="nav-item">Lakukan Absen</span>
+          </a>
+        </li>
+        <li>
+          <a href="/lecturer/lecturer_attendance_list">
+            <i class="fas fa-chart-bar"></i>
+            <span class="nav-item">Daftar Kehadiran</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('routes.logout') }}" class="logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="nav-item">Log out</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <section class="main">
+      <div class="main-top">
+        <h1>Mata Kuliah yang Anda ampu</h1>
+      </div>
+      <div class="users">
+        {% if data.subjects %}
+        {% for subject_id, subject in data.subjects.items() %}
+        <div class="card">
+          <img src="{{ url_for('static', filename='Files/Resources/admin_icon.jpg') }}" />
+          <h4>{{ subject.name }}</h4>
+          <p>{{ subject.code }}</p>
+          <div class="per">
+            <table>
+              <tr>
+                <td><span>{{ subject.kelas }}</span></td>
+              </tr>
+              <tr>
+                <td>Kelas</td>
+              </tr>
+            </table>
+          </div>
+          <form method="POST" action="{{ url_for('routes.lecturer_student_list') }}">
+            <input type="hidden" name="subject_id" value="{{ subject_id }}">
+            <button class="edit_student" type="submit">Detail Mahasiswa</button>
+          </form>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="card">
+          <p>Anda tidak memiliki mata kuliah yang diampu, silakan hubungi Admin.</p>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+</body>
+
+</html>

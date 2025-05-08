@@ -1,0 +1,57 @@
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h1.welcome {
+    font-size: 28px;
+    color: rgb(28, 180, 87);
+    margin-bottom: 32px;
+}
+
+.form-container {
+    max-width: 400px;
+    /* Set a maximum width for the form */
+    width: 90%;
+    /* Make it responsive on smaller screens */
+    margin: 0 auto;
+    /* Center the form */
+    padding: 20px;
+    /* Add padding for better spacing */
+    background-color: #f9f9f9;
+    /* Light background color for contrast */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+}
+
+.form-container .input-box {
+    margin-bottom: 20px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: rgb(28, 180, 87);
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    /* Ensure the button matches the form width */
+}
+
+button:hover {
+    background-color: hsl(110, 91%, 41%);
+}
