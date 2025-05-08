@@ -11,6 +11,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "default-key")  # Change this to a ran
 # Firebase configuration details
 load_dotenv()
 
-FIREBASE_CREDENTIALS = json.loads(os.environ.get("GOOGLE_SERVICE_KEY"))
+FIREBASE_CREDENTIALS = json.loads(os.environ.get("FIREBASE_CREDENTIALS"))
 DATABASE_URL = os.environ.get("DATABASE_URL")
 STORAGE_BUCKET = os.environ.get("STORAGE_BUCKET")
