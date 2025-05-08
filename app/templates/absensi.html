@@ -50,36 +50,44 @@
                 <h1>Mata Kuliah yang Dipilih: {{ subject }}</h1>
             </div>
             <div class="mainFrame">
-                <!-- Video Feed container (initially hidden) -->
+                <!-- Tambahkan pesan error hidden -->
+                <div id="cameraError" style="display: none; color: red; padding: 20px;">
+                    Kamera tidak tersedia di mode server. Sistem menggunakan video dummy untuk demonstrasi.
+                </div>
+                
+                <!-- Video Feed container -->
                 <div id="videoFeedContainer"></div>
-
-                <!-- Button to toggle the video feed -->
+                
                 <button class="absen-button" id="toggleButton" onclick="toggleImage()">Buka Kamera Absen</button>
             </div>
-        </section>
-    </div>
-    <script>
-        function toggleImage() {
-            var container = document.getElementById("videoFeedContainer");
-            var button = document.getElementById("toggleButton");
-
-            // If the image is already there, remove it
-            if (container.querySelector('img')) {
-                container.innerHTML = ''; // Remove the <img> element
-                button.textContent = "Buka Kamera Absen"; // Change button text
-            } else {
-                // Add the <img> tag when the button is clicked
-                var img = document.createElement("img");
-                img.className = "responsive-video-frame";
-                img.src = "{{ url_for('routes.video') }}"; // Set the image source
-                img.alt = "Video Feed";
-
-                // Append the image to the container
-                container.appendChild(img);
-                button.textContent = "Tutup Kamera Absen"; // Change button text
-            }
-        }
-    </script>
+            
+            <script>
+                function toggleImage() {
+                    var container = document.getElementById("videoFeedContainer");
+                    var errorDiv = document.getElementById("cameraError");
+                    
+                    if(container.querySelector('img')) {
+                        // Kode existing untuk menutup
+                        container.innerHTML = '';
+                        errorDiv.style.display = "none";
+                        button.textContent = "Buka Kamera Absen";
+                    } else {
+                        var img = new Image();
+                        img.className = "responsive-video-frame";
+                        img.alt = "Video Feed";
+                        
+                        // Handle error loading
+                        img.onerror = function() {
+                            errorDiv.style.display = "block";
+                            container.removeChild(img);
+                        };
+                        
+                        img.src = "{{ url_for('routes.video') }}";
+                        container.appendChild(img);
+                        document.getElementById("toggleButton").textContent = "Tutup Kamera Absen";
+                    }
+                }
+            </script>
 </body>
 
 </html>
