@@ -1,5 +1,6 @@
 import os
 import json
+import base64
 
 # Cache for encoded faces
 ENCODE_FILE = "EncodeFile.p"  # Path to the encoded faces file
