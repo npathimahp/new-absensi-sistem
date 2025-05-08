@@ -1,6 +1,8 @@
 # Gunakan image base Python
 FROM python:3.9-slim
 
+RUN apt-get update && apt-get install -y libgl1
+
 # Install CMake dan build tools
 RUN apt-get update && apt-get install -y \
     cmake \
